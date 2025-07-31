@@ -16,4 +16,5 @@
 Welcome to `@interactive-video-labs/react` — a lightweight React wrapper around the `@interactive-video-labs/core` engine for cue-driven interactive video experiences.
 
 This wrapper makes it easy to embed interactive video players in React apps using familiar props and event handlers, while keeping close to the core API.
+
 ---
