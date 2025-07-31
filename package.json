@@ -1,0 +1,50 @@
+{
+  "name": "@interactive-video-labs/react",
+  "version": "0.0.1",
+  "description": "",
+  "main": "dist/index.cjs",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup src/index.ts --format esm,cjs --dts",
+    "dev": "tsup src/index.ts --watch --format esm,cjs",
+    "test": "vitest run",
+    "clean": "rm -rf dist",
+    "prepare": "pnpm build"
+  },
+  "keywords": [
+    "interactive-video",
+    "video-engine",
+    "typescript",
+    "framework-agnostic",
+    "education",
+    "state-machine"
+  ],
+  "author": "Taj",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/taj54/interactive-video-react-wrapper.git"
+  },
+  "homepage": "https://github.com/taj54/interactive-video-react-wrapper#readme",
+  "bugs": {
+    "url": "https://github.com/taj54/interactive-video-react-wrapper/issues"
+  },
+  "packageManager": "pnpm@10.13.1",
+  "dependencies": {
+    "jsdom": "^26.1.0",
+    "tsup": "^8.5.0",
+    "typescript": "^5.8.3",
+    "vitest": "^3.2.4"
+  }
+}
