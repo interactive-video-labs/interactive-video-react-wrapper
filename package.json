@@ -34,11 +34,11 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/taj54/interactive-video-react-wrapper.git"
+    "url": "git+https://github.com/interactive-video-labs/interactive-video-react-wrapper.git"
   },
-  "homepage": "https://github.com/taj54/interactive-video-react-wrapper#readme",
+  "homepage": "https://github.com/interactive-video-labs/interactive-video-react-wrapper#readme",
   "bugs": {
-    "url": "https://github.com/taj54/interactive-video-react-wrapper/issues"
+    "url": "https://github.com/interactive-video-labs/interactive-video-react-wrapper/issues"
   },
   "packageManager": "pnpm@10.13.1",
   "dependencies": {
