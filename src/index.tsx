@@ -48,26 +48,31 @@ export const InteractiveVideo: React.FC<InteractiveVideoProps> = ({ videoUrl, on
       };
 
       try {
-        playerRef.current = new IVLabsPlayer(`#${uniqueIdRef.current}`, playerConfig);
+        setTimeout(() => {
+          if (containerRef.current) {
+            const player = new IVLabsPlayer(`#${uniqueIdRef.current}`, playerConfig);
+            playerRef.current = player;
 
-        if (onAnalyticsEvent) {
-          playerRef.current.on('PLAYER_LOADED', (payload) => onAnalyticsEvent('PLAYER_LOADED', payload));
-          playerRef.current.on('VIDEO_STARTED', (payload) => onAnalyticsEvent('VIDEO_STARTED', payload));
-          playerRef.current.on('VIDEO_PAUSED', (payload) => onAnalyticsEvent('VIDEO_PAUSED', payload));
-          playerRef.current.on('VIDEO_ENDED', (payload) => onAnalyticsEvent('VIDEO_ENDED', payload));
-          playerRef.current.on('CUE_TRIGGERED', (payload) => onAnalyticsEvent('CUE_TRIGGERED', payload));
-          playerRef.current.on('INTERACTION_COMPLETED', (payload) => onAnalyticsEvent('INTERACTION_COMPLETED', payload));
-          playerRef.current.on('ERROR', (payload) => onAnalyticsEvent('ERROR', payload));
-        }
+            if (onAnalyticsEvent) {
+              player.on('PLAYER_LOADED', (payload?: AnalyticsPayload) => onAnalyticsEvent('PLAYER_LOADED', payload));
+              player.on('VIDEO_STARTED', (payload?: AnalyticsPayload) => onAnalyticsEvent('VIDEO_STARTED', payload));
+              player.on('VIDEO_PAUSED', (payload?: AnalyticsPayload) => onAnalyticsEvent('VIDEO_PAUSED', payload));
+              player.on('VIDEO_ENDED', (payload?: AnalyticsPayload) => onAnalyticsEvent('VIDEO_ENDED', payload));
+              player.on('CUE_TRIGGERED', (payload?: AnalyticsPayload) => onAnalyticsEvent('CUE_TRIGGERED', payload));
+              player.on('INTERACTION_COMPLETED', (payload?: AnalyticsPayload) => onAnalyticsEvent('INTERACTION_COMPLETED', payload));
+              player.on('ERROR', (payload?: AnalyticsPayload) => onAnalyticsEvent('ERROR', payload));
+            }
 
-        if (cues) {
-          playerRef.current.loadCues(cues);
-        }
+            if (cues) {
+              player.loadCues(cues);
+            }
 
-        if (translations) {
-          const locale = restOptions.locale || 'en';
-          playerRef.current.loadTranslations(locale, translations);
-        }
+            if (translations) {
+              const locale = restOptions.locale || 'en';
+              player.loadTranslations(locale, translations);
+            }
+          }
+        }, 0);
       } catch (error) {
         console.error('Error initializing IVLabsPlayer:', error);
       }
