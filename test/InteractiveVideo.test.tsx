@@ -22,6 +22,7 @@ vi.mock('@interactive-video-labs/core', () => ({
 describe('InteractiveVideo', () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    vi.useFakeTimers();
   });
 
   it('renders a div element', () => {
@@ -38,6 +39,8 @@ describe('InteractiveVideo', () => {
     const onAnalyticsEvent = vi.fn();
 
     render(<InteractiveVideo videoUrl={videoSrc} {...options} cues={cues} translations={translations} onAnalyticsEvent={onAnalyticsEvent} />);
+
+    vi.runAllTimers();
 
     expect(vi.mocked(IVLabsPlayer)).toHaveBeenCalled();
 
@@ -70,6 +73,7 @@ describe('InteractiveVideo', () => {
 
   it('calls destroy on unmount', () => {
     const { unmount } = render(<InteractiveVideo videoUrl="test.mp4" />);
+    vi.runAllTimers();
     unmount();
     expect(mockDestroy).toHaveBeenCalledTimes(1);
   });
