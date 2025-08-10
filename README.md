@@ -1,4 +1,5 @@
 # @interactive-video-labs/react
+
 <p align="center">
   <img src="https://raw.githubusercontent.com/interactive-video-labs/docs/main/logo.svg" width="200px" alt="Interactive Video Labs Logo" />
 </p>
@@ -10,8 +11,6 @@
     <img src="https://github.com/interactive-video-labs/interactive-video-react-wrapper/actions/workflows/release.yml/badge.svg" alt="Build Status" />
   </a>
 </p>
-
-
 
 Welcome to `@interactive-video-labs/react` — a lightweight React wrapper around the `@interactive-video-labs/core` engine for cue-driven interactive video experiences.
 
@@ -25,11 +24,11 @@ This wrapper makes it easy to embed interactive video players in React apps usin
 
 ## Features
 
-*   **Easy Integration**: Seamlessly embed interactive videos into your React components.
-*   **Cue Point Management**: Load and manage cue points for dynamic video interactions.
-*   **Analytics Events**: Receive detailed analytics events from the video player to track user engagement.
-*   **Localization**: Support for player localization through translations.
-*   **Direct Core API Access**: Provides a React-friendly interface while maintaining close alignment with the core IVLabsPlayer API.
+- **Easy Integration**: Seamlessly embed interactive videos into your React components.
+- **Cue Point Management**: Load and manage cue points for dynamic video interactions.
+- **Analytics Events**: Receive detailed analytics events from the video player to track user engagement.
+- **Localization**: Support for player localization through translations.
+- **Direct Core API Access**: Provides a React-friendly interface while maintaining close alignment with the core IVLabsPlayer API.
 
 ## Installation
 
@@ -62,8 +61,31 @@ const MyVideoPlayer = () => {
           // Handle analytics events, e.g., send to a tracking service
         }}
         cues={[
-          { time: 10, id: 'intro-cue', type: 'pause' },
-          { time: 25, id: 'question-cue', type: 'custom', data: { question: 'What is your favorite color?' } },
+          {
+            id: 'segmentChange',
+            time: 10,
+            label: 'Segment Change',
+            payload: {
+              interaction: {
+                type: 'choice-video-segment-change',
+                title: 'Choose your path',
+                description: 'Select a video segment to jump to.',
+                question: 'Where would you like to go?',
+                options: [
+                  {
+                    level: 'Segment A',
+                    video:
+                      'https://interactive-video-labs.github.io/assets/sample-interaction-1.mp4',
+                  },
+                  {
+                    level: 'Segment B',
+                    video:
+                      'https://interactive-video-labs.github.io/assets/sample-interaction-2.mp4',
+                  },
+                ],
+              },
+            },
+          },
         ]}
         translations={{
           en: {
@@ -83,13 +105,13 @@ export default MyVideoPlayer;
 
 The `InteractiveVideo` component accepts the following props:
 
-*   `videoUrl` (string, **required**): The URL of the video to be played.
-*   `onAnalyticsEvent` (function, optional): A callback function that is triggered when an analytics event occurs. It receives the `event` name and an optional `payload`.
-    *   `event`: `PLAYER_LOADED`, `VIDEO_STARTED`, `VIDEO_PAUSED`, `VIDEO_ENDED`, `CUE_TRIGGERED`, `INTERACTION_COMPLETED`, `ERROR`.
-    *   `payload`: An object containing event-specific data.
-*   `cues` (CuePoint[], optional): An array of cue points to load into the player. Each `CuePoint` object should conform to the `@interactive-video-labs/core` `CuePoint` interface.
-*   `translations` (Translations, optional): An object containing translations for player localization. This should conform to the `@interactive-video-labs/core` `Translations` interface.
-*   `...restOptions` (PlayerConfig, optional): Any other valid `PlayerConfig` options from `@interactive-video-labs/core` (excluding `videoUrl`, `cues`, and `translations`). This allows for direct pass-through of core player configurations like `autoplay`, `loop`, `controls`, `locale`, etc.
+- `videoUrl` (string, **required**): The URL of the video to be played.
+- `onAnalyticsEvent` (function, optional): A callback function that is triggered when an analytics event occurs. It receives the `event` name and an optional `payload`.
+  - `event`: `PLAYER_LOADED`, `VIDEO_STARTED`, `VIDEO_PAUSED`, `VIDEO_ENDED`, `CUE_TRIGGERED`, `INTERACTION_COMPLETED`, `ERROR`.
+  - `payload`: An object containing event-specific data.
+- `cues` (CuePoint[], optional): An array of cue points to load into the player. Each `CuePoint` object should conform to the `@interactive-video-labs/core` `CuePoint` interface.
+- `translations` (Translations, optional): An object containing translations for player localization. This should conform to the `@interactive-video-labs/core` `Translations` interface.
+- `...restOptions` (PlayerConfig, optional): Any other valid `PlayerConfig` options from `@interactive-video-labs/core` (excluding `videoUrl`, `cues`, and `translations`). This allows for direct pass-through of core player configurations like `autoplay`, `loop`, `controls`, `locale`, etc.
 
 ## Development
 
