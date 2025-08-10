@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { InteractiveVideo } from '../dist/index';
+import { InteractiveVideo } from '@interactive-video-labs/react';
 
 const App = () => {
   return (
@@ -13,6 +13,17 @@ const App = () => {
           onAnalyticsEvent={(event, payload) => {
             console.log('Analytics Event:', event, payload);
           }}
+          cues={[
+            {
+              id: 'cue1',
+              time: 2,
+              payload: {
+                type: 'quiz',
+                question: 'What is the capital of France?',
+                answers: ['Paris', 'London', 'Berlin', 'Madrid'],
+              },
+            },
+          ]}
         />
       </div>
     </div>
