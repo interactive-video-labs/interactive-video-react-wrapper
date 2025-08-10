@@ -62,7 +62,7 @@ describe('InteractiveVideo', () => {
 
     expect(playerCall).toBeDefined();
     if (playerCall) {
-      expect(playerCall[0]).toMatch(/^#ivlabs-player-/);
+      expect(playerCall[0]).toMatch(/^ivlabs-player-/);
       expect(playerCall[1]).toEqual({ videoUrl: videoSrc, ...options });
     }
 
