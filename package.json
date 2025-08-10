@@ -13,6 +13,12 @@
       "require": "./dist/index.cjs"
     }
   },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --fix",
+      "prettier --write --cache"
+    ]
+  },
   "files": [
     "dist"
   ],
@@ -21,7 +27,9 @@
     "dev": "tsup --watch",
     "test": "vitest run",
     "clean": "rm -rf dist",
-    "prepare": "pnpm build",
+    "prepare": "husky",
+    "lint": "lint-staged",
+    "commitlint": "commitlint --edit",
     "serve-examples": "pnpm build-examples && http-server examples -c-1",
     "build-examples": "esbuild examples/index.tsx --bundle --outfile=examples/dist/index.js --jsx=automatic"
   },
@@ -59,9 +67,22 @@
     "vitest": "^3.2.4"
   },
   "devDependencies": {
+    "@commitlint/cli": "^19.8.1",
+    "@commitlint/config-conventional": "^19.8.1",
     "@testing-library/jest-dom": "^6.6.4",
     "@testing-library/react": "^16.0.0",
     "@types/react": "^19.1.9",
-    "http-server": "^14.1.1"
+    "@typescript-eslint/eslint-plugin": "^8.39.0",
+    "@typescript-eslint/parser": "^8.39.0",
+    "eslint": "^9.33.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.4",
+    "eslint-plugin-react": "^7.37.5",
+    "exbuild": "^0.2.2",
+    "http-server": "^14.1.1",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.1.5",
+    "prettier": "^3.6.2",
+    "typescript-eslint": "^8.39.0"
   }
 }
