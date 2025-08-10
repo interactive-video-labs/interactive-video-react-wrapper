@@ -59,55 +59,35 @@ export const InteractiveVideo: React.FC<InteractiveVideoProps> = ({
   const uniqueIdRef = useRef<string>(generateUniqueId());
 
   useEffect(() => {
-    if (containerRef.current && !playerRef.current) {
-      const playerConfig: PlayerConfig = {
-        videoUrl,
-        ...restOptions,
-      };
+    if (!containerRef.current) return;
 
-      try {
-        setTimeout(() => {
-          if (containerRef.current) {
-            const player = new IVLabsPlayer(uniqueIdRef.current, playerConfig);
-            playerRef.current = player;
+    const playerConfig: PlayerConfig = {
+      videoUrl,
+      ...restOptions,
+    };
 
-            if (onAnalyticsEvent) {
-              player.on('PLAYER_LOADED', (payload?: AnalyticsPayload) =>
-                onAnalyticsEvent('PLAYER_LOADED', payload)
-              );
-              player.on('VIDEO_STARTED', (payload?: AnalyticsPayload) =>
-                onAnalyticsEvent('VIDEO_STARTED', payload)
-              );
-              player.on('VIDEO_PAUSED', (payload?: AnalyticsPayload) =>
-                onAnalyticsEvent('VIDEO_PAUSED', payload)
-              );
-              player.on('VIDEO_ENDED', (payload?: AnalyticsPayload) =>
-                onAnalyticsEvent('VIDEO_ENDED', payload)
-              );
-              player.on('CUE_TRIGGERED', (payload?: AnalyticsPayload) =>
-                onAnalyticsEvent('CUE_TRIGGERED', payload)
-              );
-              player.on('INTERACTION_COMPLETED', (payload?: AnalyticsPayload) =>
-                onAnalyticsEvent('INTERACTION_COMPLETED', payload)
-              );
-              player.on('ERROR', (payload?: AnalyticsPayload) =>
-                onAnalyticsEvent('ERROR', payload)
-              );
-            }
+    try {
+      const player = new IVLabsPlayer(uniqueIdRef.current, playerConfig);
+      playerRef.current = player;
 
-            if (cues) {
-              player.loadCues(cues);
-            }
-
-            if (translations) {
-              const locale = restOptions.locale || 'en';
-              player.loadTranslations(locale, translations);
-            }
-          }
-        }, 0);
-      } catch (error) {
-        console.error('Error initializing IVLabsPlayer:', error);
+      if (onAnalyticsEvent) {
+        const events: AnalyticsEvent[] = [
+          'PLAYER_LOADED',
+          'VIDEO_STARTED',
+          'VIDEO_PAUSED',
+          'VIDEO_ENDED',
+          'CUE_TRIGGERED',
+          'INTERACTION_COMPLETED',
+          'ERROR',
+        ];
+        events.forEach((event) => {
+          player.on(event, (payload?: AnalyticsPayload) =>
+            onAnalyticsEvent(event, payload)
+          );
+        });
       }
+    } catch (error) {
+      console.error('Error initializing IVLabsPlayer:', error);
     }
 
     return () => {
@@ -116,7 +96,20 @@ export const InteractiveVideo: React.FC<InteractiveVideoProps> = ({
         playerRef.current = null;
       }
     };
-  }, [videoUrl, onAnalyticsEvent, cues, translations, restOptions]);
+  }, [videoUrl, onAnalyticsEvent, restOptions]);
+
+  useEffect(() => {
+    if (playerRef.current && cues) {
+      playerRef.current.loadCues(cues);
+    }
+  }, [cues]);
+
+  useEffect(() => {
+    if (playerRef.current && translations) {
+      const locale = restOptions.locale || 'en';
+      playerRef.current.loadTranslations(locale, translations);
+    }
+  }, [translations, restOptions.locale]);
 
   return (
     <div
