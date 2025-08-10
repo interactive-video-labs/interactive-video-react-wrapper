@@ -78,7 +78,6 @@
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.4",
     "eslint-plugin-react": "^7.37.5",
-    "exbuild": "^0.2.2",
     "http-server": "^14.1.1",
     "husky": "^9.1.7",
     "lint-staged": "^16.1.5",
