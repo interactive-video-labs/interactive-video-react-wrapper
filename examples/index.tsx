@@ -15,12 +15,41 @@ const App = () => {
           }}
           cues={[
             {
-              id: 'cue1',
-              time: 2,
+              id: 'segmentChange',
+              time: 10,
+              label: 'Segment Change',
               payload: {
-                type: 'quiz',
-                question: 'What is the capital of France?',
-                answers: ['Paris', 'London', 'Berlin', 'Madrid'],
+                interaction: {
+                  type: 'choice-video-segment-change',
+                  title: 'Choose your path',
+                  description: 'Select a video segment to jump to.',
+                  question: 'Where would you like to go?',
+                  options: [
+                    {
+                      level: 'Segment A',
+                      video:
+                        'https://interactive-video-labs.github.io/assets/sample-interaction-1.mp4',
+                    },
+                    {
+                      level: 'Segment B',
+                      video:
+                        'https://interactive-video-labs.github.io/assets/sample-interaction-2.mp4',
+                    },
+                  ],
+                },
+              },
+            },
+            {
+              id: 'question2',
+              time: 2,
+              label: 'Question 2',
+              payload: {
+                interaction: {
+                  type: 'text',
+                  title: 'Your Information',
+                  description: 'Please enter your name below.',
+                  question: 'Your name?',
+                },
               },
             },
           ]}
