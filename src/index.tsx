@@ -1,14 +1,26 @@
 import React, { useEffect, useRef } from 'react';
-import { IVLabsPlayer, PlayerConfig, CuePoint, Translations, AnalyticsEvent, AnalyticsPayload } from '@interactive-video-labs/core';
+import {
+  IVLabsPlayer,
+  PlayerConfig,
+  CuePoint,
+  Translations,
+  AnalyticsEvent,
+  AnalyticsPayload,
+} from '@interactive-video-labs/core';
 
-export interface InteractiveVideoProps extends Omit<PlayerConfig, 'videoUrl' | 'cues' | 'translations'> {
+export interface InteractiveVideoProps
+  extends Omit<PlayerConfig, 'videoUrl' | 'cues' | 'translations'> {
   videoUrl: string; // Make videoUrl mandatory
-  onAnalyticsEvent?: (event: AnalyticsEvent, payload?: AnalyticsPayload) => void;
+  onAnalyticsEvent?: (
+    event: AnalyticsEvent,
+    payload?: AnalyticsPayload
+  ) => void;
   cues?: CuePoint[]; // Explicitly use CuePoint
   translations?: Translations; // Explicitly use Translations
 }
 
-const generateUniqueId = () => `ivlabs-player-${Math.random().toString(36).substr(2, 9)}`;
+const generateUniqueId = () =>
+  `ivlabs-player-${Math.random().toString(36).slice(2, 9)}`;
 
 /**
  * `InteractiveVideo` is a React component that wraps the `@interactive-video-labs/core` IVLabsPlayer.
@@ -31,11 +43,17 @@ const generateUniqueId = () => `ivlabs-player-${Math.random().toString(36).subst
  *   videoUrl="https://example.com/my-video.mp4"
  *   autoplay={true}
  *   onAnalyticsEvent={(event, payload) => console.log(event, payload)}
- *   cues={[{ time: 10, id: 'my-cue', type: 'pause' }]} 
+ *   cues={[{ time: 10, id: 'my-cue', type: 'pause' }]}
  * />
  * ```
  */
-export const InteractiveVideo: React.FC<InteractiveVideoProps> = ({ videoUrl, onAnalyticsEvent, cues, translations, ...restOptions }) => {
+export const InteractiveVideo: React.FC<InteractiveVideoProps> = ({
+  videoUrl,
+  onAnalyticsEvent,
+  cues,
+  translations,
+  ...restOptions
+}) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const playerRef = useRef<IVLabsPlayer | null>(null);
   const uniqueIdRef = useRef<string>(generateUniqueId());
@@ -50,17 +68,31 @@ export const InteractiveVideo: React.FC<InteractiveVideoProps> = ({ videoUrl, on
       try {
         setTimeout(() => {
           if (containerRef.current) {
-            const player = new IVLabsPlayer(`#${uniqueIdRef.current}`, playerConfig);
+            const player = new IVLabsPlayer(uniqueIdRef.current, playerConfig);
             playerRef.current = player;
 
             if (onAnalyticsEvent) {
-              player.on('PLAYER_LOADED', (payload?: AnalyticsPayload) => onAnalyticsEvent('PLAYER_LOADED', payload));
-              player.on('VIDEO_STARTED', (payload?: AnalyticsPayload) => onAnalyticsEvent('VIDEO_STARTED', payload));
-              player.on('VIDEO_PAUSED', (payload?: AnalyticsPayload) => onAnalyticsEvent('VIDEO_PAUSED', payload));
-              player.on('VIDEO_ENDED', (payload?: AnalyticsPayload) => onAnalyticsEvent('VIDEO_ENDED', payload));
-              player.on('CUE_TRIGGERED', (payload?: AnalyticsPayload) => onAnalyticsEvent('CUE_TRIGGERED', payload));
-              player.on('INTERACTION_COMPLETED', (payload?: AnalyticsPayload) => onAnalyticsEvent('INTERACTION_COMPLETED', payload));
-              player.on('ERROR', (payload?: AnalyticsPayload) => onAnalyticsEvent('ERROR', payload));
+              player.on('PLAYER_LOADED', (payload?: AnalyticsPayload) =>
+                onAnalyticsEvent('PLAYER_LOADED', payload)
+              );
+              player.on('VIDEO_STARTED', (payload?: AnalyticsPayload) =>
+                onAnalyticsEvent('VIDEO_STARTED', payload)
+              );
+              player.on('VIDEO_PAUSED', (payload?: AnalyticsPayload) =>
+                onAnalyticsEvent('VIDEO_PAUSED', payload)
+              );
+              player.on('VIDEO_ENDED', (payload?: AnalyticsPayload) =>
+                onAnalyticsEvent('VIDEO_ENDED', payload)
+              );
+              player.on('CUE_TRIGGERED', (payload?: AnalyticsPayload) =>
+                onAnalyticsEvent('CUE_TRIGGERED', payload)
+              );
+              player.on('INTERACTION_COMPLETED', (payload?: AnalyticsPayload) =>
+                onAnalyticsEvent('INTERACTION_COMPLETED', payload)
+              );
+              player.on('ERROR', (payload?: AnalyticsPayload) =>
+                onAnalyticsEvent('ERROR', payload)
+              );
             }
 
             if (cues) {
@@ -87,7 +119,12 @@ export const InteractiveVideo: React.FC<InteractiveVideoProps> = ({ videoUrl, on
   }, [videoUrl, onAnalyticsEvent, cues, translations, restOptions]);
 
   return (
-    <div ref={containerRef} id={uniqueIdRef.current} style={{ width: '100%', height: 'auto' }} data-testid="interactive-video-container">
+    <div
+      ref={containerRef}
+      id={uniqueIdRef.current}
+      style={{ width: '100%', height: 'auto' }}
+      data-testid="interactive-video-container"
+    >
       {/* The IVLabsPlayer will inject the video element here */}
     </div>
   );

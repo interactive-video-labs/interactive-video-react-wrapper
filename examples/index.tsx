@@ -8,7 +8,7 @@ const App = () => {
       <h1>Interactive Video React Wrapper Example</h1>
       <div style={{ width: '80%', margin: '0 auto' }}>
         <InteractiveVideo
-          videoUrl="https://interactive-video-labs.github.io/interactive-video-demos/videos/big_buck_bunny.mp4"
+          videoUrl="https://interactive-video-labs.github.io/assets/sample-interaction-1.mp4"
           autoplay={true}
           onAnalyticsEvent={(event, payload) => {
             console.log('Analytics Event:', event, payload);

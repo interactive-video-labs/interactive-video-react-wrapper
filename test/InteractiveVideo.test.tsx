@@ -38,21 +38,31 @@ describe('InteractiveVideo', () => {
     const translations = { en: { hello: 'Hello' } };
     const onAnalyticsEvent = vi.fn();
 
-    render(<InteractiveVideo videoUrl={videoSrc} {...options} cues={cues} translations={translations} onAnalyticsEvent={onAnalyticsEvent} />);
+    render(
+      <InteractiveVideo
+        videoUrl={videoSrc}
+        {...options}
+        cues={cues}
+        translations={translations}
+        onAnalyticsEvent={onAnalyticsEvent}
+      />
+    );
 
     vi.runAllTimers();
 
     expect(vi.mocked(IVLabsPlayer)).toHaveBeenCalled();
 
     const calls = vi.mocked(IVLabsPlayer).mock.calls;
-    const playerCall = calls.find(call => {
+    const playerCall = calls.find((call) => {
       const config = call[1];
-      return config.videoUrl === videoSrc && config.autoplay === options.autoplay;
+      return (
+        config.videoUrl === videoSrc && config.autoplay === options.autoplay
+      );
     });
 
     expect(playerCall).toBeDefined();
     if (playerCall) {
-      expect(playerCall[0]).toMatch(/^#ivlabs-player-/);
+      expect(playerCall[0]).toMatch(/^ivlabs-player-/);
       expect(playerCall[1]).toEqual({ videoUrl: videoSrc, ...options });
     }
 
@@ -67,7 +77,10 @@ describe('InteractiveVideo', () => {
     expect(mockOn).toHaveBeenCalledWith('VIDEO_PAUSED', expect.any(Function));
     expect(mockOn).toHaveBeenCalledWith('VIDEO_ENDED', expect.any(Function));
     expect(mockOn).toHaveBeenCalledWith('CUE_TRIGGERED', expect.any(Function));
-    expect(mockOn).toHaveBeenCalledWith('INTERACTION_COMPLETED', expect.any(Function));
+    expect(mockOn).toHaveBeenCalledWith(
+      'INTERACTION_COMPLETED',
+      expect.any(Function)
+    );
     expect(mockOn).toHaveBeenCalledWith('ERROR', expect.any(Function));
   });
 
