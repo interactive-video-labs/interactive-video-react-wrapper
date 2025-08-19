@@ -1,6 +1,6 @@
 {
   "name": "@interactive-video-labs/react",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "Thin React wrapper for the @interactive-video-labs/core engine. Enables cue-based interactive video playback in React apps.",
   "type": "module",
   "main": "dist/index.cjs",
@@ -53,7 +53,7 @@
   "bugs": {
     "url": "https://github.com/interactive-video-labs/interactive-video-react-wrapper/issues"
   },
-  "packageManager": "pnpm@10.13.1",
+  "packageManager": "pnpm@10.14.0",
   "peerDependencies": {
     "@interactive-video-labs/core": "^0.1.2",
     "react": ">=17.0.0 || >=18.0.0",
