@@ -55,7 +55,7 @@
   },
   "packageManager": "pnpm@10.17.1",
   "peerDependencies": {
-    "@interactive-video-labs/core": "^0.1.2",
+    "@interactive-video-labs/core": "^0.1.2 || ^0.2.0",
     "react": ">=17.0.0 || >=18.0.0",
     "react-dom": ">=17.0.0 || >=18.0.0"
   },
