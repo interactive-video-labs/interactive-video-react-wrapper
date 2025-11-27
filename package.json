@@ -53,7 +53,7 @@
   "bugs": {
     "url": "https://github.com/interactive-video-labs/interactive-video-react-wrapper/issues"
   },
-  "packageManager": "pnpm@10.22.0",
+  "packageManager": "pnpm@10.24.0",
   "peerDependencies": {
     "@interactive-video-labs/core": "^0.1.2 || ^0.2.0",
     "react": ">=17.0.0 || >=18.0.0",
