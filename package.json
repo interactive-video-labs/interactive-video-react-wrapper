@@ -61,9 +61,10 @@
   },
   "dependencies": {
     "@vitejs/plugin-react": "^6.0.0",
+    "@typescript/native": "npm:typescript@^7.0.2",
     "jsdom": "^31.0.0",
     "tsup": "^9.0.0",
-    "typescript": "^7.0.0",
+    "typescript": "npm:@typescript/typescript6@^6.0.2",
     "vitest": "^5.0.0"
   },
   "devDependencies": {
