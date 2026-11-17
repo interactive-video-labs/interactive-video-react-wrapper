@@ -11,12 +11,14 @@ const mockOn = vi.fn();
 const mockDestroy = vi.fn();
 
 vi.mock('@interactive-video-labs/core', () => ({
-  IVLabsPlayer: vi.fn(() => ({
-    loadCues: mockLoadCues,
-    loadTranslations: mockLoadTranslations,
-    on: mockOn,
-    destroy: mockDestroy,
-  })),
+  IVLabsPlayer: vi.fn(function () {
+    return {
+      loadCues: mockLoadCues,
+      loadTranslations: mockLoadTranslations,
+      on: mockOn,
+      destroy: mockDestroy,
+    };
+  }),
 }));
 
 describe('InteractiveVideo', () => {
