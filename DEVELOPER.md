@@ -46,6 +46,7 @@ Here's an overview of the key directories and files in this project:
 *   `tsup.config.ts`: Configuration for `tsup`, the bundler used to build the library.
 *   `vitest.config.ts`: Configuration for `Vitest`, the testing framework.
 *   `package.json`: Project metadata, dependencies, and scripts.
+*   Core compatibility: the wrapper targets `@interactive-video-labs/core@^0.3.1`.
 
 ## 3. Available Scripts
 

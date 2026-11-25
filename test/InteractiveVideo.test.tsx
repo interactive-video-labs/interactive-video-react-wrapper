@@ -8,6 +8,8 @@ import { IVLabsPlayer } from '@interactive-video-labs/core';
 const mockLoadCues = vi.fn();
 const mockLoadTranslations = vi.fn();
 const mockOn = vi.fn();
+const mockOnLiveSyncEvent = vi.fn();
+const mockOnLiveSyncStatus = vi.fn();
 const mockDestroy = vi.fn();
 
 vi.mock('@interactive-video-labs/core', () => ({
@@ -16,6 +18,8 @@ vi.mock('@interactive-video-labs/core', () => ({
       loadCues: mockLoadCues,
       loadTranslations: mockLoadTranslations,
       on: mockOn,
+      onLiveSyncEvent: mockOnLiveSyncEvent,
+      onLiveSyncStatus: mockOnLiveSyncStatus,
       destroy: mockDestroy,
     };
   }),
@@ -65,14 +69,19 @@ describe('InteractiveVideo', () => {
     expect(playerCall).toBeDefined();
     if (playerCall) {
       expect(playerCall[0]).toMatch(/^ivlabs-player-/);
-      expect(playerCall[1]).toEqual({ videoUrl: videoSrc, ...options });
+      expect(playerCall[1]).toEqual({
+        videoUrl: videoSrc,
+        cues,
+        translations,
+        ...options,
+      });
     }
 
     expect(mockLoadCues).toHaveBeenCalledTimes(1);
     expect(mockLoadCues).toHaveBeenCalledWith(cues);
 
     expect(mockLoadTranslations).toHaveBeenCalledTimes(1);
-    expect(mockLoadTranslations).toHaveBeenCalledWith('en', translations);
+    expect(mockLoadTranslations).toHaveBeenCalledWith('en', translations.en);
 
     expect(mockOn).toHaveBeenCalledWith('PLAYER_LOADED', expect.any(Function));
     expect(mockOn).toHaveBeenCalledWith('VIDEO_STARTED', expect.any(Function));
