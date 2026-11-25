@@ -13,6 +13,7 @@
 </p>
 
 Welcome to `@interactive-video-labs/react` — a lightweight React wrapper around the `@interactive-video-labs/core` engine for cue-driven interactive video experiences.
+This release tracks `@interactive-video-labs/core` `^0.3.1`.
 
 This wrapper makes it easy to embed interactive video players in React apps using familiar props and event handlers, while keeping close to the core API.
 
@@ -28,6 +29,8 @@ This wrapper makes it easy to embed interactive video players in React apps usin
 - **Cue Point Management**: Load and manage cue points for dynamic video interactions.
 - **Analytics Events**: Receive detailed analytics events from the video player to track user engagement.
 - **Localization**: Support for player localization through translations.
+- **Core 0.3.1 Features**: Pass-through support for subtitles, interactions, debugger mode, decision adapters, and live sync.
+- **Imperative Controls**: Optional React ref access to playback, state, cues, translations, decisions, and live sync.
 - **Direct Core API Access**: Provides a React-friendly interface while maintaining close alignment with the core IVLabsPlayer API.
 
 ## Installation
@@ -55,7 +58,6 @@ const MyVideoPlayer = () => {
         videoUrl="https://interactive-video-labs.github.io/interactive-video-demos/videos/big_buck_bunny.mp4"
         autoplay={true}
         loop={false}
-        controls={true}
         onAnalyticsEvent={(event, payload) => {
           console.log('Analytics Event:', event, payload);
           // Handle analytics events, e.g., send to a tracking service
@@ -93,6 +95,10 @@ const MyVideoPlayer = () => {
             pause: 'Pause Video',
           },
         }}
+        debugger={true}
+        onLiveSyncStatus={(status) => {
+          console.log('Live sync status:', status);
+        }}
       />
     </div>
   );
@@ -107,11 +113,34 @@ The `InteractiveVideo` component accepts the following props:
 
 - `videoUrl` (string, **required**): The URL of the video to be played.
 - `onAnalyticsEvent` (function, optional): A callback function that is triggered when an analytics event occurs. It receives the `event` name and an optional `payload`.
-  - `event`: `PLAYER_LOADED`, `VIDEO_STARTED`, `VIDEO_PAUSED`, `VIDEO_ENDED`, `CUE_TRIGGERED`, `INTERACTION_COMPLETED`, `ERROR`.
+  - Includes core events such as `PLAYER_LOADED`, `VIDEO_STARTED`, `VIDEO_PAUSED`, `CUE_LOADED`, `CUE_TRIGGERED`, `INTERACTION_SHOWN`, `INTERACTION_COMPLETED`, `VIDEO_ENDED`, `PLAYER_DESTROYED`, `ERROR`, and the normalized analytics hooks.
   - `payload`: An object containing event-specific data.
 - `cues` (CuePoint[], optional): An array of cue points to load into the player. Each `CuePoint` object should conform to the `@interactive-video-labs/core` `CuePoint` interface.
-- `translations` (Translations, optional): An object containing translations for player localization. This should conform to the `@interactive-video-labs/core` `Translations` interface.
-- `...restOptions` (PlayerConfig, optional): Any other valid `PlayerConfig` options from `@interactive-video-labs/core` (excluding `videoUrl`, `cues`, and `translations`). This allows for direct pass-through of core player configurations like `autoplay`, `loop`, `controls`, `locale`, etc.
+- `translations` (Record<string, Translations>, optional): A locale-to-translations map for player localization.
+- `onLiveSyncEvent` (function, optional): Receives normalized live sync events such as room state, cue, decision, poll, and presence updates.
+- `onLiveSyncStatus` (function, optional): Receives live sync connection lifecycle updates.
+- `...restOptions` (PlayerConfig, optional): Any other valid `PlayerConfig` options from `@interactive-video-labs/core` (excluding `videoUrl`, `cues`, and `translations`). This allows for direct pass-through of core player configurations like `autoplay`, `loop`, `subtitlesUrl`, `locale`, `interactions`, `debugger`, `liveSync`, and decision adapters.
+
+## Imperative Ref
+
+The component forwards a ref for core player operations:
+
+```tsx
+import { useRef } from 'react';
+import {
+  InteractiveVideo,
+  type InteractiveVideoHandle,
+} from '@interactive-video-labs/react';
+
+const playerRef = useRef<InteractiveVideoHandle>(null);
+
+<InteractiveVideo ref={playerRef} videoUrl="/video.mp4" />
+playerRef.current?.play();
+playerRef.current?.pause();
+const state = playerRef.current?.getState();
+```
+
+Available methods include `play`, `pause`, `syncToLive`, `getState`, `setLocale`, `loadCues`, `loadTranslations`, `getDecisionHistory`, `clearDecisionHistory`, `sendLiveSyncMessage`, and `getPlayer`.
 
 ## Development
 

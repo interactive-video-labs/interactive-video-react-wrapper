@@ -1,3 +1,18 @@
+# Changelog
+
+All notable changes to this project will be documented in this file.
+
+## [0.3.0] - 2026-11-25
+
+### Changed
+
+- Updated compatibility to `@interactive-video-labs/core@^0.3.1`.
+- Added pass-through support for current core player configuration options.
+- Added analytics subscriptions for the complete core event surface.
+- Added live sync event and status callbacks.
+- Added an imperative ref handle for core playback and decision APIs.
+- Updated README and developer documentation for core 0.3.1 usage.
+
 ## v0.2.0 2025-09-24
 
 ### Added
@@ -98,10 +113,6 @@
 - update dependency @vitejs/plugin-react to v5.0.1
 - update dependency @vitejs/plugin-react to v5
 - update dependency typescript to v5.9.2
-
-# Changelog
-
-All notable changes to this project will be documented in this file.
 
 ## [0.0.2] - 2025-08-10
 
